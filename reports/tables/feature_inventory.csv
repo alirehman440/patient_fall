@@ -1,0 +1,4 @@
+experiment_name,display_name,clip_rows,frame_rows,privacy_mode
+yolov8n_rgb,YOLOv8n RGB,160,1600,full_rgb
+yolov8n_blur,YOLOv8n Blurred,160,1600,blurred_rgb
+yolov8n_pose_rgb,YOLOv8n-Pose Skeleton Output,160,1600,full_rgb

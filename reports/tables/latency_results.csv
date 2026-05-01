@@ -1,0 +1,7 @@
+model_key,format,device,status,artifact_source,error,mean_latency_ms,median_latency_ms,p95_latency_ms,fps,process_rss_mb
+yolov8n,pt,cpu,success,yolov8n.pt,,64.3262199992023,55.022699998517055,109.2080249967694,15.545760344885817,1925.578125
+yolov8n,onnx,cpu,success,f:\patient fall\models\yolov8n\onnx\yolov8n.onnx,,56.92187499807915,54.10475000098813,69.8219849895395,17.567938512808045,2003.4921875
+yolov8n,openvino,cpu,success,f:\patient fall\models\yolov8n\openvino\yolov8n_openvino_model,,68.0372949987941,62.49839999509277,96.36232498960453,14.697821246681311,2017.4296875
+yolov8n_pose,pt,cpu,success,yolov8n-pose.pt,,39.272635000088485,35.430250005447306,70.50075000297511,25.463022789220712,1945.34765625
+yolov8n_pose,onnx,cpu,success,f:\patient fall\models\yolov8n_pose\onnx\yolov8n-pose.onnx,,57.78309499946772,47.238899998774286,95.08083500331853,17.30609964746976,2006.8203125
+yolov8n_pose,openvino,cpu,success,f:\patient fall\models\yolov8n_pose\openvino\yolov8n-pose_openvino_model,,77.09525000027497,74.6090499960701,97.40755501115927,12.970967731428763,2011.79296875

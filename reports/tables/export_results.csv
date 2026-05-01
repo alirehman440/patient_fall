@@ -1,0 +1,5 @@
+model_key,format,status,artifact_path,error
+yolov8n,onnx,success,f:\patient fall\models\yolov8n\onnx\yolov8n.onnx,
+yolov8n,openvino,success,f:\patient fall\models\yolov8n\openvino\yolov8n_openvino_model,
+yolov8n_pose,onnx,success,f:\patient fall\models\yolov8n_pose\onnx\yolov8n-pose.onnx,
+yolov8n_pose,openvino,success,f:\patient fall\models\yolov8n_pose\openvino\yolov8n-pose_openvino_model,

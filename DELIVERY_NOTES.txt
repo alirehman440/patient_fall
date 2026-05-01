@@ -1,0 +1,25 @@
+﻿Client Delivery Bundle
+Date: 2026-04-16
+Project: Edge AI for Patient Safety Monitoring in Hospital Rooms
+
+Included:
+- Executed notebook
+- README
+- Findings report
+- plan.md
+- Logs
+- Reports and summary tables
+- Visualizations and result plots
+- Generated result models under client_delivery/models included
+
+Excluded intentionally:
+- Raw dataset files under data/
+- Processed feature caches
+- Raw downloaded checkpoints (.pt) excluded
+- Any other heavyweight downloaded artifacts
+
+Primary result files:
+- reports/tables/experiment_split_metrics.csv
+- reports/tables/latency_results.csv
+- reports/summaries/accuracy_latency_privacy_tradeoff.csv
+- visuals/comparisons/final_tradeoff_dashboard.png

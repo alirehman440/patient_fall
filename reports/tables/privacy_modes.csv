@@ -1,0 +1,5 @@
+privacy_mode,privacy_score,description
+full_rgb,1,Original frame retained.
+blurred_rgb,2,Entire frame blurred before retention.
+masked_person,3,Background removed and only detected subject kept.
+skeleton_only,4,Only pose keypoints rendered on a blank canvas.

@@ -1,0 +1,135 @@
+Project Findings Report
+Edge AI for Patient Safety Monitoring in Hospital Rooms: A YOLOv8n-Based Evaluation of Accuracy, Latency, and Privacy Trade-Offs
+
+Date: 2026-04-16
+Project root: f:\patient fall
+Main notebook: patient_safety_monitoring_yolov8n.ipynb
+
+1. Project Goal
+
+The goal of this project was to evaluate whether lightweight YOLOv8n-based vision models can support patient safety monitoring in an edge-AI setting, with emphasis on three competing concerns: detection quality, inference latency, and privacy preservation. The work was implemented in a single notebook and all artifacts were saved under the project working directory.
+
+2. Dataset Used
+
+Primary dataset: GMDCSA-24
+Dataset summary from the completed run:
+- Total clips: 160
+- Subjects: 4
+- Fall clips: 79
+- ADL clips: 81
+- Total video duration: 0.354 hours
+- Median clip duration: 7.0 seconds
+- Median FPS: 29.825
+- Unique resolutions: 2
+
+Subject-aware split used in this project:
+- Train: Subject 1 and Subject 2, 80 clips total
+- Validation: Subject 3, 43 clips total
+- Test: Subject 4, 37 clips total
+
+This split is stricter than random clip splitting because the test subject is unseen during training and validation. That makes the results more meaningful for generalization across people, but the dataset is still small and not hospital-specific.
+
+3. Models and Variants Evaluated
+
+Three experiment variants were completed:
+
+1) YOLOv8n RGB
+- Standard YOLOv8n pipeline using RGB frames
+
+2) YOLOv8n Blurred
+- YOLOv8n pipeline using blurred frames as a privacy-oriented baseline
+
+3) YOLOv8n-Pose
+- YOLOv8n-pose pipeline using pose/keypoint-derived features
+- This was the strongest path toward privacy-preserving monitoring because the downstream output can be reduced to a skeleton representation instead of storing full patient imagery
+
+4. Test-Set Results
+
+Experiment: YOLOv8n RGB
+- Accuracy: 0.6757
+- Precision: 0.6471
+- Recall: 0.6471
+- Specificity: 0.7000
+- F1 score: 0.6471
+- ROC-AUC: 0.8059
+- PR-AUC: 0.7751
+- Mean CPU latency: 64.33 ms
+- Approximate FPS: 15.55
+
+Experiment: YOLOv8n Blurred
+- Accuracy: 0.7297
+- Precision: 0.6842
+- Recall: 0.7647
+- Specificity: 0.7000
+- F1 score: 0.7222
+- ROC-AUC: 0.7824
+- PR-AUC: 0.7019
+- Mean CPU latency: 64.33 ms
+- Approximate FPS: 15.55
+
+Experiment: YOLOv8n-Pose
+- Accuracy: 0.8378
+- Precision: 0.7619
+- Recall: 0.9412
+- Specificity: 0.7500
+- F1 score: 0.8421
+- ROC-AUC: 0.9382
+- PR-AUC: 0.9326
+- Mean CPU latency: 39.27 ms
+- Approximate FPS: 25.46
+
+5. Main Findings
+
+Finding 1: YOLOv8n-pose gave the best overall result.
+The pose-based pipeline achieved the highest test accuracy, highest test F1, highest recall, highest ROC-AUC, and the best measured CPU latency among the evaluated options. This makes it the strongest overall candidate in the current project.
+
+Finding 2: Recall matters, and the pose-based model was clearly better on recall.
+The test recall of YOLOv8n-pose was 0.9412, much higher than YOLOv8n RGB at 0.6471 and higher than YOLOv8n Blurred at 0.7647. For fall or patient-safety monitoring, missed events are usually more serious than extra alerts, so this is an important result.
+
+Finding 3: The blurred baseline outperformed the plain RGB baseline on this split.
+YOLOv8n Blurred achieved better test accuracy and F1 than YOLOv8n RGB. That is an interesting result, but it should be interpreted cautiously. The dataset is small, the split is fixed by subject, and the result may reflect regularization effects or split-specific behavior rather than a universal advantage of blurring.
+
+Finding 4: Faster export formats were not guaranteed on this machine.
+For YOLOv8n, ONNX was faster than the local PyTorch checkpoint. For YOLOv8n-pose, the PyTorch checkpoint was the fastest result. OpenVINO was slower than expected in this environment. This shows that deployment format decisions should be benchmarked on the target device rather than assumed.
+
+Finding 5: Privacy and utility do not appear to be fully opposing forces here.
+The project produced blurred, masked-person, and skeleton-style privacy outputs. The strongest quantitative result came from the pose-based pipeline, which is also the most promising route to privacy-preserving retention because it can operate with reduced visual detail in downstream outputs.
+
+6. Export and Deployment Findings
+
+All planned model exports completed successfully:
+- YOLOv8n ONNX
+- YOLOv8n OpenVINO
+- YOLOv8n-pose ONNX
+- YOLOv8n-pose OpenVINO
+
+Observed mean CPU latencies:
+- YOLOv8n PT: 64.33 ms
+- YOLOv8n ONNX: 56.92 ms
+- YOLOv8n OpenVINO: 68.04 ms
+- YOLOv8n-pose PT: 39.27 ms
+- YOLOv8n-pose ONNX: 57.78 ms
+- YOLOv8n-pose OpenVINO: 77.10 ms
+
+The most important deployment result from this run is that the best accuracy model was also the fastest local CPU model.
+
+7. Important Limitations
+
+- GMDCSA-24 is not a true hospital-room dataset, so the project is better described as a feasibility study than a clinical-ready hospital monitoring solution.
+- The dataset has only 4 subjects and 160 clips, which limits confidence in broad generalization.
+- The split was subject-aware, which is good, but still only uses one held-out subject for final testing.
+- The measured latency is local-machine CPU latency, not edge-device latency on hardware such as Jetson, NPU devices, or Raspberry Pi accelerators.
+- The pose-based experiment used RGB input for inference and derived pose/keypoint features; it is not the same as training a dedicated skeleton-only model from scratch.
+
+8. Final Conclusion
+
+Based on the completed notebook run, YOLOv8n-pose is the best current choice for this project. It delivered the best test accuracy, the best F1 score, the best recall, and the lowest measured inference latency on the local CPU benchmark. The results support the idea that a lightweight edge-AI patient safety monitoring system can balance utility and privacy more effectively with pose-based processing than with standard RGB object detection alone.
+
+9. Recommended Next Steps
+
+- Benchmark the same pipeline on an actual edge target device
+- Evaluate on a more hospital-like or clinically relevant dataset
+- Add temporal decision logic across longer frame windows
+- Measure false alarm rate over longer continuous video streams
+- Test privacy-preserving deployment modes that retain only skeleton or masked-person outputs
+

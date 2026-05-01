@@ -1,0 +1,15 @@
+action,count
+Sitting,77
+Standing,60
+Walking,58
+Falling (SW),29
+Falling (BW),27
+Reading,20
+Falling (FW),20
+Sleeping,15
+Drinking,12
+Exercising,11
+Writing,8
+Eating,8
+Fall (FW),2
+BW,1

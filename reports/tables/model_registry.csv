@@ -1,0 +1,3 @@
+model_key,display_name,weights_argument,resolved_checkpoint
+yolov8n,YOLOv8n,yolov8n.pt,yolov8n.pt
+yolov8n_pose,YOLOv8n-Pose,yolov8n-pose.pt,yolov8n-pose.pt
