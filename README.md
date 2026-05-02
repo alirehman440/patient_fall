@@ -1,6 +1,6 @@
 # Edge AI for Patient Safety Monitoring in Hospital Rooms
 
-This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency and privacy-preserving representations.
+This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency, model size, and privacy-preserving output modes.
 
 ## Project Scope
 
@@ -17,19 +17,11 @@ The study benchmarks:
 - export readiness for PyTorch, ONNX, and OpenVINO
 - privacy-oriented output modes such as blurred frames, masked-person views, and skeleton-style rendering
 
-## Main Notebook
-
-All core code lives in:
-
-- [patient_safety_monitoring_yolov8n.ipynb](/f:/patient%20fall/patient_safety_monitoring_yolov8n.ipynb:1)
-
-There are no required external `.py` scripts for the project workflow.
-
 ## Dataset
 
 Primary dataset:
 
-- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository inside the notebook
+- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository
 
 Dataset summary from the completed run:
 
@@ -92,7 +84,7 @@ The project includes several privacy modes:
 - `masked_person`: keep subject while removing background
 - `skeleton_only`: render only pose keypoints on a blank canvas
 
-The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identifiable frames.
+The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identity information.
 
 ## Export and Deployment Status
 
@@ -118,27 +110,27 @@ The practical lesson is that export format should be benchmarked on the target h
 
 Important generated outputs include:
 
-- Metrics table: [experiment_split_metrics.csv](/f:/patient%20fall/reports/tables/experiment_split_metrics.csv:1)
-- Latency table: [latency_results.csv](/f:/patient%20fall/reports/tables/latency_results.csv:1)
-- Trade-off summary: [accuracy_latency_privacy_tradeoff.csv](/f:/patient%20fall/reports/summaries/accuracy_latency_privacy_tradeoff.csv:1)
-- Final comparison plot: [final_tradeoff_dashboard.png](/f:/patient%20fall/visuals/comparisons/final_tradeoff_dashboard.png:1)
-- Privacy examples: [privacy_modes_Subject_4_FALL_01.png](/f:/patient%20fall/visuals/privacy/privacy_modes_Subject_4_FALL_01.png:1)
+- Metrics table: `reports/tables/experiment_split_metrics.csv`
+- Latency table: `reports/tables/latency_results.csv`
+- Trade-off summary: `reports/summaries/accuracy_latency_privacy_tradeoff.csv`
+- Final comparison plot: `visuals/comparisons/final_tradeoff_dashboard.png`
+- Privacy examples: `visuals/privacy/privacy_modes_Subject_4_FALL_01.png`
 
 Per-experiment logs are saved under:
 
-- [logs](/f:/patient%20fall/logs:1)
+- `logs/`
 
 Processed metadata and feature caches are saved under:
 
-- [data/processed](/f:/patient%20fall/data/processed:1)
+- `data/processed/`
 
 Plots and visualizations are saved under:
 
-- [visuals](/f:/patient%20fall/visuals:1)
+- `visuals/`
 
 Exported and trained artifacts are saved under:
 
-- [models](/f:/patient%20fall/models:1)
+- `models/`
 
 ## Directory Layout
 
