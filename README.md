@@ -1,6 +1,6 @@
 # Edge AI for Patient Safety Monitoring in Hospital Rooms
 
-This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference efficiency and privacy preservation.
+This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference efficiency and privacy-preserving output modes.
 
 ## Project Scope
 
@@ -21,7 +21,7 @@ The study benchmarks:
 
 Primary dataset:
 
-- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository
+- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository.
 
 Dataset summary from the completed run:
 
@@ -146,6 +146,7 @@ Exported and trained artifacts are saved under:
 .
 |-- patient_safety_monitoring_yolov8n.ipynb
 |-- yolov8n-pose.pt
+|-- interface.py
 |-- plan.md
 |-- README.md
 |-- project_findings_report.txt
@@ -160,6 +161,26 @@ Exported and trained artifacts are saved under:
 
 ## How To Run
 
+### Quick Start
+
+To open and run the project interface:
+
+1. **Install dependencies** (if not already installed):
+   ```bash
+   pip install -r requirements.txt
+   ```
+   Or manually install the required packages (see Requirements section below).
+
+2. **Run the interface**:
+   ```bash
+   python interface.py
+   ```
+   This will open the project interface where you can interact with the patient fall detection system.
+
+### Full Pipeline
+
+If you want to run the complete analysis pipeline:
+
 1. Open `patient_safety_monitoring_yolov8n.ipynb`.
 2. Run the notebook from top to bottom.
 3. The dataset download cell will skip downloading if the dataset already exists locally.
@@ -170,7 +191,7 @@ The notebook includes progress bars for the heavier steps such as download, extr
 
 ## Requirements
 
-The notebook uses standard Python tooling plus a few ML and CV packages, including:
+The project uses standard Python tooling plus a few ML and CV packages, including:
 
 - `ultralytics`
 - `opencv-python`
@@ -183,7 +204,11 @@ The notebook uses standard Python tooling plus a few ML and CV packages, includi
 - `tqdm`
 - `psutil`
 
-If packages are missing, the notebook setup cells are designed to help with environment preparation.
+If packages are missing when running `interface.py`, the script will guide you to install any missing dependencies. You can also install all dependencies at once using:
+
+```bash
+pip install ultralytics opencv-python numpy pandas matplotlib seaborn scikit-learn joblib tqdm psutil
+```
 
 ## Limitations
 
