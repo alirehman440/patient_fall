@@ -1,6 +1,6 @@
 # Edge AI for Patient Safety Monitoring in Hospital Rooms
 
-This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency, model size, and privacy-preserving output modes.
+This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference efficiency and privacy preservation.
 
 ## Project Scope
 
@@ -39,6 +39,14 @@ Subject-aware split used:
 - Test: Subject 4
 
 This split avoids leakage across subjects, but the dataset is still limited in size and is not an actual hospital-room dataset.
+
+## Pre-trained Models
+
+The project includes a pre-trained YOLOv8n-Pose model:
+
+- [yolov8n-pose.pt](https://github.com/alirehman440/patient_fall/blob/main/yolov8n-pose.pt): Pre-trained YOLOv8n-Pose model for pose-based patient fall detection
+
+This model achieved the best performance in the study with **83.78% accuracy**, **94.12% recall**, and **39.27 ms CPU latency**.
 
 ## Approach
 
@@ -84,7 +92,7 @@ The project includes several privacy modes:
 - `masked_person`: keep subject while removing background
 - `skeleton_only`: render only pose keypoints on a blank canvas
 
-The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identity information.
+The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full video frames.
 
 ## Export and Deployment Status
 
@@ -137,6 +145,7 @@ Exported and trained artifacts are saved under:
 ```text
 .
 |-- patient_safety_monitoring_yolov8n.ipynb
+|-- yolov8n-pose.pt
 |-- plan.md
 |-- README.md
 |-- project_findings_report.txt
