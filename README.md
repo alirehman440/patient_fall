@@ -1,6 +1,6 @@
 # Edge AI for Patient Safety Monitoring in Hospital Rooms
 
-This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency and privacy trade-offs. The full workflow is implemented in a single notebook, and all outputs are kept under the current working directory.
+This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency and privacy-preserving representations.
 
 ## Project Scope
 
@@ -29,7 +29,7 @@ There are no required external `.py` scripts for the project workflow.
 
 Primary dataset:
 
-- GMDCSA-24: downloaded from the official GitHub repository inside the notebook
+- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository inside the notebook
 
 Dataset summary from the completed run:
 
@@ -92,7 +92,7 @@ The project includes several privacy modes:
 - `masked_person`: keep subject while removing background
 - `skeleton_only`: render only pose keypoints on a blank canvas
 
-The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identifiable imagery.
+The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identifiable frames.
 
 ## Export and Deployment Status
 
@@ -199,4 +199,3 @@ If packages are missing, the notebook setup cells are designed to help with envi
 - add stronger temporal modeling across longer video windows
 - measure continuous-stream false alarm behavior
 - evaluate fully privacy-reduced deployment outputs in a stricter quantitative setting
-
