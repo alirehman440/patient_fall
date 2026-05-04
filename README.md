@@ -40,13 +40,6 @@ Subject-aware split used:
 
 This split avoids leakage across subjects, but the dataset is still limited in size and is not an actual hospital-room dataset.
 
-## Pre-trained Models
-
-The project includes a pre-trained YOLOv8n-Pose model:
-
-- [yolov8n-pose.pt](https://github.com/alirehman440/patient_fall/blob/main/yolov8n-pose.pt): Pre-trained YOLOv8n-Pose model for pose-based patient fall detection
-
-This model achieved the best performance in the study with **83.78% accuracy**, **94.12% recall**, and **39.27 ms CPU latency**.
 
 ## Approach
 
@@ -94,14 +87,7 @@ The project includes several privacy modes:
 
 The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full video frames.
 
-## Export and Deployment Status
 
-All planned exports completed successfully:
-
-- `models/yolov8n/onnx/yolov8n.onnx`
-- `models/yolov8n/openvino/yolov8n_openvino_model/`
-- `models/yolov8n_pose/onnx/yolov8n-pose.onnx`
-- `models/yolov8n_pose/openvino/yolov8n-pose_openvino_model/`
 
 Latency findings from the local CPU benchmark:
 
@@ -124,40 +110,6 @@ Important generated outputs include:
 - Final comparison plot: `visuals/comparisons/final_tradeoff_dashboard.png`
 - Privacy examples: `visuals/privacy/privacy_modes_Subject_4_FALL_01.png`
 
-Per-experiment logs are saved under:
-
-- `logs/`
-
-Processed metadata and feature caches are saved under:
-
-- `data/processed/`
-
-Plots and visualizations are saved under:
-
-- `visuals/`
-
-Exported and trained artifacts are saved under:
-
-- `models/`
-
-## Directory Layout
-
-```text
-.
-|-- patient_safety_monitoring_yolov8n.ipynb
-|-- yolov8n-pose.pt
-|-- interface.py
-|-- plan.md
-|-- README.md
-|-- project_findings_report.txt
-|-- data/
-|   |-- raw/
-|   `-- processed/
-|-- logs/
-|-- models/
-|-- reports/
-`-- visuals/
-```
 
 ## How To Run
 
@@ -177,17 +129,6 @@ To open and run the project interface:
    ```
    This will open the project interface where you can interact with the patient fall detection system.
 
-### Full Pipeline
-
-If you want to run the complete analysis pipeline:
-
-1. Open `patient_safety_monitoring_yolov8n.ipynb`.
-2. Run the notebook from top to bottom.
-3. The dataset download cell will skip downloading if the dataset already exists locally.
-4. Wait for feature extraction, evaluation, and benchmarking cells to complete.
-5. Review saved outputs under `reports/`, `visuals/`, `logs/`, and `models/`.
-
-The notebook includes progress bars for the heavier steps such as download, extraction, feature extraction, and benchmarking.
 
 ## Requirements
 
@@ -210,18 +151,3 @@ If packages are missing when running `interface.py`, the script will guide you t
 pip install ultralytics opencv-python numpy pandas matplotlib seaborn scikit-learn joblib tqdm psutil
 ```
 
-## Limitations
-
-- GMDCSA-24 is not a true hospital-room dataset
-- only 4 subjects are available
-- the final test set contains only one held-out subject
-- latency was measured on the local machine, not a real edge device
-- the project is best treated as a feasibility study, not a clinical validation
-
-## Recommended Next Steps
-
-- benchmark on a real edge device
-- test on a more hospital-like dataset
-- add stronger temporal modeling across longer video windows
-- measure continuous-stream false alarm behavior
-- evaluate fully privacy-reduced deployment outputs in a stricter quantitative setting
