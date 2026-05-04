@@ -579,8 +579,15 @@ def save_preview_video(frames_rgb: list[np.ndarray], stem: str, fps: float) -> s
     height, width = frames_rgb[0].shape[:2]
     video_fps = fps if fps and fps > 0 else 15.0
     # video_fps = float(min(max(video_fps, 2.0), 8.0))
-    fourcc_fn = getattr(cv2, "VideoWriter_fourcc")
-    writer = cv2.VideoWriter(str(output_path), int(fourcc_fn(*"mp4v")), video_fps, (width, height))
+    # Use 'avc1' (H.264) for better web browser compatibility in Gradio/HTML5 players
+    fourcc = int(cv2.VideoWriter_fourcc(*"avc1"))
+    writer = cv2.VideoWriter(str(output_path), fourcc, video_fps, (width, height))
+    
+    # Fallback if avc1 is not supported by the local OpenCV build
+    if not writer.isOpened():
+        fourcc = int(cv2.VideoWriter_fourcc(*"mp4v"))
+        writer = cv2.VideoWriter(str(output_path), fourcc, video_fps, (width, height))
+
     if not writer.isOpened():
         return None
     for frame_rgb in frames_rgb:
