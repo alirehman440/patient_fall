@@ -1,6 +1,6 @@
 # Edge AI for Patient Safety Monitoring in Hospital Rooms
 
-This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference latency and privacy trade-offs. The full workflow is implemented in a single notebook, and all outputs are kept under the current working directory.
+This project evaluates lightweight YOLOv8n-based approaches for patient fall and safety monitoring under edge deployment constraints. The focus is not only on detection quality, but also on inference efficiency and privacy-preserving output modes.
 
 ## Project Scope
 
@@ -17,19 +17,11 @@ The study benchmarks:
 - export readiness for PyTorch, ONNX, and OpenVINO
 - privacy-oriented output modes such as blurred frames, masked-person views, and skeleton-style rendering
 
-## Main Notebook
-
-All core code lives in:
-
-- [patient_safety_monitoring_yolov8n.ipynb](/f:/patient%20fall/patient_safety_monitoring_yolov8n.ipynb:1)
-
-There are no required external `.py` scripts for the project workflow.
-
 ## Dataset
 
 Primary dataset:
 
-- GMDCSA-24: downloaded from the official GitHub repository inside the notebook
+- [GMDCSA-24](https://github.com/ekramalam/GMDCSA24-A-Dataset-for-Human-Fall-Detection-in-Videos#gmdcsa24-a-dataset-for-human-fall-detection-in-videos): downloaded from the official GitHub repository.
 
 Dataset summary from the completed run:
 
@@ -47,6 +39,7 @@ Subject-aware split used:
 - Test: Subject 4
 
 This split avoids leakage across subjects, but the dataset is still limited in size and is not an actual hospital-room dataset.
+
 
 ## Approach
 
@@ -92,16 +85,9 @@ The project includes several privacy modes:
 - `masked_person`: keep subject while removing background
 - `skeleton_only`: render only pose keypoints on a blank canvas
 
-The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full identifiable imagery.
+The pose-based pipeline is the most promising route for privacy-preserving monitoring because the downstream retained representation can be reduced to skeletal information rather than storing full video frames.
 
-## Export and Deployment Status
 
-All planned exports completed successfully:
-
-- `models/yolov8n/onnx/yolov8n.onnx`
-- `models/yolov8n/openvino/yolov8n_openvino_model/`
-- `models/yolov8n_pose/onnx/yolov8n-pose.onnx`
-- `models/yolov8n_pose/openvino/yolov8n-pose_openvino_model/`
 
 Latency findings from the local CPU benchmark:
 
@@ -118,58 +104,35 @@ The practical lesson is that export format should be benchmarked on the target h
 
 Important generated outputs include:
 
-- Metrics table: [experiment_split_metrics.csv](/f:/patient%20fall/reports/tables/experiment_split_metrics.csv:1)
-- Latency table: [latency_results.csv](/f:/patient%20fall/reports/tables/latency_results.csv:1)
-- Trade-off summary: [accuracy_latency_privacy_tradeoff.csv](/f:/patient%20fall/reports/summaries/accuracy_latency_privacy_tradeoff.csv:1)
-- Final comparison plot: [final_tradeoff_dashboard.png](/f:/patient%20fall/visuals/comparisons/final_tradeoff_dashboard.png:1)
-- Privacy examples: [privacy_modes_Subject_4_FALL_01.png](/f:/patient%20fall/visuals/privacy/privacy_modes_Subject_4_FALL_01.png:1)
+- Metrics table: `reports/tables/experiment_split_metrics.csv`
+- Latency table: `reports/tables/latency_results.csv`
+- Trade-off summary: `reports/summaries/accuracy_latency_privacy_tradeoff.csv`
+- Final comparison plot: `visuals/comparisons/final_tradeoff_dashboard.png`
+- Privacy examples: `visuals/privacy/privacy_modes_Subject_4_FALL_01.png`
 
-Per-experiment logs are saved under:
-
-- [logs](/f:/patient%20fall/logs:1)
-
-Processed metadata and feature caches are saved under:
-
-- [data/processed](/f:/patient%20fall/data/processed:1)
-
-Plots and visualizations are saved under:
-
-- [visuals](/f:/patient%20fall/visuals:1)
-
-Exported and trained artifacts are saved under:
-
-- [models](/f:/patient%20fall/models:1)
-
-## Directory Layout
-
-```text
-.
-|-- patient_safety_monitoring_yolov8n.ipynb
-|-- plan.md
-|-- README.md
-|-- project_findings_report.txt
-|-- data/
-|   |-- raw/
-|   `-- processed/
-|-- logs/
-|-- models/
-|-- reports/
-`-- visuals/
-```
 
 ## How To Run
 
-1. Open `patient_safety_monitoring_yolov8n.ipynb`.
-2. Run the notebook from top to bottom.
-3. The dataset download cell will skip downloading if the dataset already exists locally.
-4. Wait for feature extraction, evaluation, and benchmarking cells to complete.
-5. Review saved outputs under `reports/`, `visuals/`, `logs/`, and `models/`.
+### Quick Start
 
-The notebook includes progress bars for the heavier steps such as download, extraction, feature extraction, and benchmarking.
+To open and run the project interface:
+
+1. **Install dependencies** (if not already installed):
+   ```bash
+   pip install -r requirements.txt
+   ```
+   Or manually install the required packages (see Requirements section below).
+
+2. **Run the interface**:
+   ```bash
+   python interface.py
+   ```
+   This will open the project interface where you can interact with the patient fall detection system.
+
 
 ## Requirements
 
-The notebook uses standard Python tooling plus a few ML and CV packages, including:
+The project uses standard Python tooling plus a few ML and CV packages, including:
 
 - `ultralytics`
 - `opencv-python`
@@ -182,21 +145,9 @@ The notebook uses standard Python tooling plus a few ML and CV packages, includi
 - `tqdm`
 - `psutil`
 
-If packages are missing, the notebook setup cells are designed to help with environment preparation.
+If packages are missing when running `interface.py`, the script will guide you to install any missing dependencies. You can also install all dependencies at once using:
 
-## Limitations
-
-- GMDCSA-24 is not a true hospital-room dataset
-- only 4 subjects are available
-- the final test set contains only one held-out subject
-- latency was measured on the local machine, not a real edge device
-- the project is best treated as a feasibility study, not a clinical validation
-
-## Recommended Next Steps
-
-- benchmark on a real edge device
-- test on a more hospital-like dataset
-- add stronger temporal modeling across longer video windows
-- measure continuous-stream false alarm behavior
-- evaluate fully privacy-reduced deployment outputs in a stricter quantitative setting
+```bash
+pip install ultralytics opencv-python numpy pandas matplotlib seaborn scikit-learn joblib tqdm psutil
+```
 
