@@ -100,16 +100,6 @@ Latency findings from the local CPU benchmark:
 
 The practical lesson is that export format should be benchmarked on the target hardware. It should not be assumed that OpenVINO or ONNX will always be faster.
 
-## Project Outputs
-
-Important generated outputs include:
-
-- Metrics table: `reports/tables/experiment_split_metrics.csv`
-- Latency table: `reports/tables/latency_results.csv`
-- Trade-off summary: `reports/summaries/accuracy_latency_privacy_tradeoff.csv`
-- Final comparison plot: `visuals/comparisons/final_tradeoff_dashboard.png`
-- Privacy examples: `visuals/privacy/privacy_modes_Subject_4_FALL_01.png`
-
 
 ## How To Run
 
